@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import re
 from scrapy.http import Request
 from urllib import parse
 from ArticleSpider.items import JobboleArticleItem, ArticleItemLoader
@@ -66,21 +65,34 @@ class JobboleSpider(scrapy.Spider):
         # article_item["tags"] = tags
         # article_item["url_object_id"] = get_md5(response.url)
         #itemloader 加载item
-        item_loader = ArticleItemLoader(item=JobboleArticleItem(), response=response)
-        front_image_url = response.meta.get("front_image_url", "")
-        item_loader.add_css("title", "div.entry-header h1::text")
+        # item_loader = ArticleItemLoader(item=JobboleArticleItem(), response=response)
+        # front_image_url = response.meta.get("front_image_url", "")
+        # item_loader.add_css("title", "div.entry-header h1::text")
+        # item_loader.add_value("front_image_url", [front_image_url])
+        # item_loader.add_value("url", response.url)
+        # item_loader.add_value("url_object_id", get_md5(response.url))
+        # item_loader.add_css("praise_number", "span.vote-post-up h10::text")
+        # item_loader.add_css("create_time", "p.entry-meta-hide-on-mobile::text")
+        # item_loader.add_css("tags", "p.entry-meta-hide-on-mobile a::text")
+        # item_loader.add_css("content", "div.entry")
+        # item_loader.add_css("fav_nums", "span.bookmark-btn::text")
+        # item_loader.add_css("comment_nums", "a[href='#article-comment'] span::text")
+        # article_item = item_loader.load_item()
+        # yield article_item
+        item_loader = ArticleItemLoader(item=JobboleArticleItem(),response=response)
+        front_image_url = response.meta.get("front_image_url","")
+        item_loader.add_css("title","div.entry-header h1::text")
         item_loader.add_value("front_image_url", [front_image_url])
         item_loader.add_value("url", response.url)
         item_loader.add_value("url_object_id", get_md5(response.url))
         item_loader.add_css("praise_number", "span.vote-post-up h10::text")
-        item_loader.add_css("create_time", "p.entry-meta-hide-on-mobile::text")
+        item_loader.add_css("create_time", "p.entry-meta-hider-on-mobile::text")
         item_loader.add_css("tags", "p.entry-meta-hide-on-mobile a::text")
         item_loader.add_css("content", "div.entry")
         item_loader.add_css("fav_nums", "span.bookmark-btn::text")
         item_loader.add_css("comment_nums", "a[href='#article-comment'] span::text")
         article_item = item_loader.load_item()
         yield article_item
-
 
 
 

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 # Define here the models for your scraped items
-#
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/items.html
+
 
 import scrapy
 from scrapy.loader.processors import MapCompose, TakeFirst, Join
@@ -19,11 +19,11 @@ class ArticlespiderItem(scrapy.Item):
 
 
 def date_convert(value):
-   try:
-       create_date = datetime.datetime.strptime(value,"%Y/%m/%d").date()
-   except Exception as e:
-       create_date = datetime.datetime.now().date()
-   return create_date
+        try:
+            create_date = datetime.datetime.strptime(value,"%Y/%m/%d").date()
+        except Exception as e:
+            create_date = datetime.datetime.now().date()
+        return create_date
 
 
 def get_nums(value):

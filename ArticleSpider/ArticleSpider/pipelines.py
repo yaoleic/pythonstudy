@@ -70,7 +70,7 @@ class MysqlTwistedPipeline(object):
     def __init__(self, dbpool):
         self.dbpool = dbpool
 
-    def do_insert(self,cursor,item):
+    def do_insert(self, cursor, item):
         insert_sql = """
                 insert into articles(title,create_time,praise_number,fav_nums,url,comment_nums,front_image_url,front_image_path,url_object_id,tags,content) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
                 """
@@ -82,7 +82,7 @@ class MysqlTwistedPipeline(object):
         query = self.dbpool.runInteraction(self.do_insert, item)
         query.addErrback(self.handle_error, item, spider)
 
-    def handle_error(self,failure,item,spider):
+    def handle_error(self, failure, item, spider):
         print(failure)
 
 
@@ -97,14 +97,14 @@ class MysqlTwistedPipeline(object):
             cursorclass = pymysql.cursors.DictCursor,
             use_unicode = True
         )
-        dbpool = adbapi.ConnectionPool("pymysql",**dbparams)
+        dbpool = adbapi.ConnectionPool("pymysql", **dbparams)
         return cls(dbpool)
 
 
 class ArticleImagePipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
         if "front_image_url" in item:
-            for ok,value in results:
+            for ok, value in results:
                 image_file_path = value['path']
             item['front_image_path'] = image_file_path
         return item
