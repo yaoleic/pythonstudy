@@ -6,7 +6,7 @@
 # https://doc.scrapy.org/en/latest/topics/items.html
 
 import scrapy
-from scrapy.loader.processors import MapCompose, TakeFirst,Join
+from scrapy.loader.processors import MapCompose, TakeFirst, Join
 import datetime
 from scrapy.loader import ItemLoader
 import re
@@ -45,6 +45,7 @@ def remove_comment(value):
 def return_value(value):
     return value
 
+
 class ArticleItemLoader(ItemLoader):
     default_output_processor = TakeFirst()
 
@@ -52,10 +53,10 @@ class ArticleItemLoader(ItemLoader):
 class JobboleArticleItem(scrapy.Item):
     title = scrapy.Field()
     create_time = scrapy.Field(
-        input_processor = MapCompose(date_convert)
+        input_processor=MapCompose(date_convert)
     )
     praise_number = scrapy.Field(
-        input_processor = MapCompose(get_nums)
+        input_processor=MapCompose(get_nums)
     )
     fav_nums = scrapy.Field(
         input_processor=MapCompose(get_nums)
